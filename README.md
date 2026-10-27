@@ -1,10 +1,10 @@
-# Parcel Post: commission tracking for artists
+# SketchPost: commission tracking for artists
 
 Any artist can sign up with Google and get their own studio. In the studio they can customize how their pages look and create as many parcels (commission tracking pages) as they like. Each parcel has a private link to send to the client.
 
 | Page | Who it's for | What it does |
 |---|---|---|
-| `/` | Everyone | Landing page: explains Parcel Post, has a "Start your studio with Google" button, and a box for clients to enter a tracking number |
+| `/` | Everyone | Landing page: explains SketchPost, has a "Open your own office" button, and a box for clients to enter a tracking number |
 | `/studio` | Artists | Sign in with Google → set up studio → list of all your parcels (search + filters) → open one to edit stages, notes and proofs → **Customize** your colors, headline, logo stamp, tracking prefix, thank-you note and default stages |
 | `/t/XX-XXXX-XXXX` | Clients | One parcel, view-only, in the artist's own colors and branding. Updates live. |
 
@@ -40,7 +40,7 @@ All artists share your one Firebase project, and the free plan includes:
 - **1 GiB of stored data.** Proof images are compressed in the browser to about 330 KB each and saved in Firestore, so roughly 2,500–3,000 proofs fit across all artists. Artists can paste image links instead to save space.
 - **50,000 document reads and 20,000 writes per day**, plus **10 GiB of downloads per month.** Each client visit reads the parcel, the artist's profile and that parcel's proofs.
 
-If Parcel Post grows past that, the next step is moving proof images to Firebase Storage or Cloudinary. Both are outside the free Spark plan's limits.
+If SketchPost grows past that, the next step is moving proof images to Firebase Storage or Cloudinary. Both are outside the free Spark plan's limits.
 
 ## Previewing locally
 

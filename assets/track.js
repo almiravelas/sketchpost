@@ -47,7 +47,7 @@ function dressUp(a) {
 function draw() {
   if (!parcel) return;
   msgEl.hidden = true; lookupEl.hidden = true;
-  document.title = `${parcel.title || 'Your commission'} · ${artist ? artist.studioName : 'Parcel Post'}`;
+  document.title = `${parcel.title || 'Your commission'} · ${artist ? artist.studioName : 'SketchPost'}`;
   const st = parcel.stages, n = st.length, label = ui.postLabel(artist);
   if (firstDraw) { const c = st.find(s => s.status === 'current'); if (c) openProofs.add(c.id); firstDraw = false; }
   ticketEl.hidden = false; ticketEl.innerHTML = ui.ticketHTML(parcel);

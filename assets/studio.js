@@ -44,7 +44,7 @@ const loadingHTML = t => `<section class="paper center"><div class="loading-mail
 function dressHeader() {
   $('logoMotif').innerHTML = ui.ICONS[(draft || artist || {}).logo] || ui.ICONS.envelope;
   const a = draft || artist;
-  $('studioEyebrow').textContent = a ? `Parcel Post · ${a.handle ? '@' + a.handle : 'Studio'}` : 'Parcel Post · Studio';
+  $('studioEyebrow').textContent = a ? `SketchPost · ${a.handle ? '@' + a.handle : 'Studio'}` : 'SketchPost · Studio';
   $('studioTitle').textContent = a ? a.studioName : 'Your studio';
   ui.applyTheme(a ? a.theme : ui.DEFAULT_THEME);
 }

@@ -228,8 +228,13 @@ textarea{resize:vertical}
 .stamp.mini{--sw:62px;--sh:74px;--r:4px}
 .stamp.mini .motif{margin-top:4px}
 .stamp.mini .denom{font-size:15px;top:2px;right:5px}
-.parcel-tile .stamp,.feature .stamp{filter:drop-shadow(0 0 .7px rgba(0,0,0,.45)) drop-shadow(0 2px 0 var(--line))}
-.parcel-tile .stamp.mini.is-pending{filter:grayscale(.85) drop-shadow(0 0 .7px rgba(0,0,0,.45)) drop-shadow(0 2px 0 var(--line));opacity:.8}
+/* Stamps that sit on cream cards: a thin ink outline traces the perforated edge so the stamp stands out from the paper. */
+.parcel-tile .stamp,.feature .stamp{
+  --edge:color-mix(in srgb,var(--navy) 55%,transparent);
+  background-color:transparent;
+  filter:drop-shadow(1.5px 0 0 var(--edge)) drop-shadow(-1.5px 0 0 var(--edge)) drop-shadow(0 1.5px 0 var(--edge)) drop-shadow(0 -1.5px 0 var(--edge)) drop-shadow(0 3px 0 var(--line))}
+.parcel-tile .stamp.mini.is-pending{opacity:.75}
+.parcel-tile .stamp.mini.is-pending .art{filter:grayscale(.85)}
 .tile-body{display:block;min-width:0;flex:1}
 .tile-body .eyebrow{color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.06em}
 .tile-code{display:block}

@@ -125,7 +125,7 @@ export function normalizeArtist(d = {}) {
       ? d.defaultStages.map(s => String(s).trim()).filter(Boolean).slice(0, 20) : DEFAULT_STAGE_NAMES.slice()
   };
 }
-export const postLabel = artist => (artist && artist.studioName ? artist.studioName : 'PARCEL POST').toUpperCase().slice(0, 13);
+export const postLabel = artist => (artist && artist.studioName ? artist.studioName : 'SKETCHPOST').toUpperCase().slice(0, 13);
 export function groupImages(images) {
   const map = new Map();
   for (const im of images || []) {
@@ -197,7 +197,7 @@ export function routeHTML(stages) {
     </div>`;
 }
 
-export function postmark(date, label = 'PARCEL POST') {
+export function postmark(date, label = 'SKETCHPOST') {
   const d = parseISO(date);
   const day = d ? d.toLocaleDateString('en-GB', { day:'2-digit', month:'short' }).toUpperCase() : 'OK';
   const yr = d ? d.getFullYear() : '';

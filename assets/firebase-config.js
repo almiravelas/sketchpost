@@ -13,7 +13,7 @@ export const firebaseConfig = {
 };
 
 // The platform's own name, shown on the landing page and in small print on every tracking page.
-export const PLATFORM = { name: 'Parcel Post', by: 'sigbinnie' };
+export const PLATFORM = { name: 'SketchPost', by: 'sigbinnie' };
 
 // Until the config above is filled in, pages show demo content.
 export const isConfigured = !!firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith('PASTE');
