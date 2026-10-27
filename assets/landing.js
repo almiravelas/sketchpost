@@ -19,7 +19,7 @@ function drawDemo() {
   $('demoTicket').innerHTML = ui.ticketHTML(commission);
   $('demoRoute').innerHTML = ui.routeHTML(st);
   $('demoStages').innerHTML = st.slice(0, 2).map((s, i) =>
-    `<article class="stage s-${s.status}" data-id="${s.id}">${ui.stampCol(s, i, ui.postLabel(artist))}<div class="card">${ui.viewCard(s, i, n, groups.get(s.id) || [], openProofs.has(s.id))}</div></article>`).join('');
+    `<article class="stage s-${s.status}" data-id="${s.id}">${ui.stampCol(s, i, ui.postLabel(artist))}<div class="card">${ui.viewCard(s, i, n, groups.get(s.id) || [], openProofs.has(s.id), commission.eta)}</div></article>`).join('');
 }
 drawDemo();
 $('demoStages').addEventListener('click', e => {

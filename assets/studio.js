@@ -465,7 +465,6 @@ function renderSettings() {
         ${sf('headline', 'Page headline', 'maxlength="60"')}
         ${sf('prefix', 'Tracking number prefix', 'maxlength="5" style="text-transform:uppercase"')}
       </div>
-      <label class="field" style="margin-top:12px"><span>Thank-you note (page footer)</span><input data-sfield="thanks" value="${esc(draft.thanks)}" maxlength="160"></label>
 
       <h3 class="sect">Colors</h3>
       <div class="presets" id="presets">${presetButtons(draft.theme)}</div>
@@ -497,8 +496,8 @@ function renderThemePreview() {
     </div></header>
     <section class="ticket">${ui.ticketHTML(c)}</section>
     <section class="route">${ui.routeHTML(c.stages)}</section>
-    <section class="stages">${c.stages.slice(0, 2).map((s, i) => `<article class="stage s-${s.status}">${ui.stampCol(s, i, lbl)}<div class="card">${ui.viewCard(s, i, n, g.get(s.id) || [], i === 1)}</div></article>`).join('')}</section>
-    <div class="foot"><p class="thanks">${esc(draft.thanks)}</p></div>`;
+    <section class="stages">${c.stages.slice(0, 2).map((s, i) => `<article class="stage s-${s.status}">${ui.stampCol(s, i, lbl)}<div class="card">${ui.viewCard(s, i, n, g.get(s.id) || [], i === 1, c.eta)}</div></article>`).join('')}</section>
+    <div class="foot"><p class="copy">© Almira Velasquez (@sigbinnie)</p></div>`;
 }
 
 function settingsChanged({ header = false } = {}) {

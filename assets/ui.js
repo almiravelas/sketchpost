@@ -237,10 +237,14 @@ export function miniStamp(stages) {
 export const thumbBtn = (st, im, k) =>
   `<button class="thumb" data-act="open" data-k="${k}" aria-label="Open ${esc(st.name)} proof ${k + 1}"><img src="${esc(im.src)}" alt="" loading="lazy" onerror="this.parentNode.classList.add('broken')"></button>`;
 
-export function viewCard(st, i, n, imgs, open) {
+// eta: the parcel's estimated delivery date, shown on the final stage until it's cleared.
+export function viewCard(st, i, n, imgs, open, eta = '') {
   const [pc, pt] = { done:['pill-done', 'Cleared'], current:['pill-current', 'In transit'], pending:['pill-pending', 'Awaiting'] }[st.status];
   const d = fmt(st.date);
-  const when = st.status === 'done' ? `Postmarked ${d}` : st.status === 'current' ? (st.date ? `Picked up ${d}` : 'In progress') : (st.date ? `Scheduled ${d}` : 'Awaiting dispatch');
+  let when = st.status === 'done' ? `Postmarked ${d}` : st.status === 'current' ? (st.date ? `Picked up ${d}` : 'In progress') : (st.date ? `Scheduled ${d}` : 'Awaiting dispatch');
+  if (i === n - 1 && st.status !== 'done' && parseISO(eta)) {
+    when = st.status === 'current' ? `${when} · Est. delivery ${fmt(eta)}` : `Est. delivery ${fmt(eta)}`;
+  }
   const proofs = imgs.length
     ? `<button class="proof-link" data-act="toggle-proofs" aria-expanded="${open}">${CLIP}View attached proof${imgs.length > 1 ? 's' : ''} (${imgs.length})${CHEV}</button>
        <div class="thumbs" ${open ? '' : 'hidden'}>${imgs.map((im, k) => thumbBtn(st, im, k)).join('')}</div>`

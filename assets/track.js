@@ -42,7 +42,6 @@ function dressUp(a) {
   $('logoMotif').innerHTML = ui.ICONS[a.logo] || ui.ICONS.envelope;
   $('studioLine').textContent = a.handle ? `${a.studioName} · @${a.handle}` : a.studioName;
   $('headline').textContent = a.headline;
-  $('thanks').textContent = a.thanks;
 }
 
 function draw() {
@@ -55,7 +54,7 @@ function draw() {
   routeEl.hidden = !n; routeEl.innerHTML = n ? ui.routeHTML(st) : '';
   const groups = ui.groupImages(images);
   stagesEl.innerHTML = n
-    ? st.map((s, i) => `<article class="stage s-${s.status}" data-id="${s.id}">${ui.stampCol(s, i, label)}<div class="card">${ui.viewCard(s, i, n, groups.get(s.id) || [], openProofs.has(s.id))}</div></article>`).join('')
+    ? st.map((s, i) => `<article class="stage s-${s.status}" data-id="${s.id}">${ui.stampCol(s, i, label)}<div class="card">${ui.viewCard(s, i, n, groups.get(s.id) || [], openProofs.has(s.id), parcel.eta)}</div></article>`).join('')
     : `<div class="empty">Your parcel is being packed. Check back soon!</div>`;
 }
 
@@ -93,7 +92,6 @@ async function start() {
     return;
   }
 
-  $('thanks').textContent = '';
   if (!code) { showLookup(); return; }
   if (!validCode(code)) { showLookup('That tracking number doesn’t look right. Check for typos?'); return; }
   $('lookupInput').value = code;
