@@ -88,23 +88,23 @@ async function start() {
     const demo = ui.demoCommission();
     dressUp(ui.demoArtist());
     parcel = demo.commission; images = demo.images;
-    draw();
+    draw(); ui.hideLoader();
     return;
   }
 
-  if (!code) { showLookup(); return; }
-  if (!validCode(code)) { showLookup('That tracking number doesn’t look right. Check for typos?'); return; }
+  if (!code) { ui.hideLoader(); showLookup(); return; }
+  if (!validCode(code)) { ui.hideLoader(); showLookup('That tracking number doesn’t look right. Check for typos?'); return; }
   $('lookupInput').value = code;
 
-  showMessage('Fetching your parcel…', '', true);
+  ui.showLoader('Fetching your parcel…');
   let fb;
   try { fb = await import('./firebase.js'); }
-  catch (err) { console.error(err); showMessage('Couldn’t reach the post office', 'Check your connection and refresh the page.'); return; }
+  catch (err) { console.error(err); ui.hideLoader(); showMessage('Couldn’t reach the post office', 'Check your connection and refresh the page.'); return; }
 
   let ownerLoaded = null;
   fb.onSnapshot(fb.doc(fb.db, 'parcels', code), async snap => {
     if (!snap.exists()) {
-      parcel = null; clearParcel(); msgEl.hidden = true;
+      parcel = null; clearParcel(); msgEl.hidden = true; ui.hideLoader();
       showLookup(`We couldn’t find parcel ${code}. Double-check the tracking number?`);
       return;
     }
@@ -117,10 +117,10 @@ async function start() {
       } catch (err) { console.error(err); }
     }
     parcel = ui.normalizeCommission(snap.id, d);
-    draw();
+    draw(); ui.hideLoader();
   }, err => {
     console.error(err);
-    clearParcel();
+    clearParcel(); ui.hideLoader();
     showMessage('Couldn’t load this parcel', 'Please refresh in a moment.');
   });
 

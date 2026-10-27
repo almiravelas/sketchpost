@@ -256,6 +256,24 @@ export function viewCard(st, i, n, imgs, open, eta = '') {
     <div class="proofs">${proofs}</div>`;
 }
 
+/* ---------- full-screen loader ---------- */
+export function showLoader(text) {
+  let el = document.getElementById('loader');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'loader'; el.className = 'loading-screen'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite');
+    el.innerHTML = `<div class="stamp logo"><div class="art"><span class="motif">${ICONS.envelope}</span></div></div><p class="eyebrow">SketchPost</p><p class="loader-text"></p>`;
+    document.body.appendChild(el);
+  }
+  el.querySelector('.loader-text').textContent = text;
+  el.hidden = false; el.classList.remove('hide');
+}
+export function hideLoader() {
+  const el = document.getElementById('loader'); if (!el || el.hidden) return;
+  el.classList.add('hide');
+  setTimeout(() => { if (el.classList.contains('hide')) el.hidden = true; }, 260);
+}
+
 /* ---------- toast ---------- */
 let toastEl, toastTimer;
 export function toast(msg, ms = 2800) {

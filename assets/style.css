@@ -275,6 +275,16 @@ textarea{resize:vertical}
   .parcel-grid{grid-template-columns:1fr}
 }
 
+/* ---------- full-screen loader ---------- */
+.loading-screen{position:fixed;inset:0;z-index:40;background:var(--blue);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--on-bg);transition:opacity .25s}
+.loading-screen::after{content:"";position:absolute;inset:0;background-image:var(--noise);opacity:.22;mix-blend-mode:multiply;pointer-events:none}
+.loading-screen.hide{opacity:0;pointer-events:none}
+.loading-screen .stamp.logo{--sw:96px;--sh:114px;--r:6px;animation:loaderbob 1.4s ease-in-out infinite}
+.loading-screen .stamp.logo .motif{width:62%}
+.loading-screen .eyebrow{margin:22px 0 0;opacity:.9}
+.loader-text{font:700 40px/1.1 'Gaegu',cursive;margin:4px 0 0;text-shadow:0 3px 0 var(--shadow)}
+@keyframes loaderbob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-12px) rotate(4deg)}}
+
 @keyframes wobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
 @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-5px)}}
 @keyframes bob2{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}

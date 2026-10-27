@@ -36,7 +36,7 @@ function errMsg(err) {
   if (c === 'auth/popup-blocked') return 'Your browser blocked the sign-in popup. Allow popups for this site and try again.';
   return (err && err.message) || 'Something went wrong.';
 }
-const loadingHTML = t => `<section class="paper center"><div class="loading-mail" aria-hidden="true">${ui.MAIL}</div><h2>${esc(t)}</h2></section>`;
+const setRoot = html => { ui.hideLoader(); root.innerHTML = html; };
 
 /* ======================================================================
    Header + theme
@@ -54,7 +54,7 @@ dressHeader();
    Auth
    ====================================================================== */
 async function boot() {
-  root.innerHTML = loadingHTML('Opening the studio…');
+  ui.showLoader('Opening your office…');
   fb = await import('./firebase.js');
   authApi = await import(AUTH_URL);
   auth = authApi.getAuth(fb.app);
@@ -71,18 +71,18 @@ function reset() {
 }
 
 function renderSignIn() {
-  root.innerHTML = `<section class="paper center">
+  setRoot(`<section class="paper center">
     <h2>Welcome to your studio</h2>
     <p class="lede">Sign in with Google to create tracking pages for your commissions. It’s free, and your clients never need an account.</p>
     <button class="btn google" data-act="signin">
       <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
       Continue with Google
     </button>
-  </section>`;
+  </section>`);
 }
 
 async function loadArtist() {
-  root.innerHTML = loadingHTML('Unlocking your studio…');
+  ui.showLoader('Unlocking your office…');
   try {
     const snap = await fb.getDoc(artistRef());
     if (!snap.exists()) { renderOnboarding(); return; }
@@ -93,7 +93,7 @@ async function loadArtist() {
     show(parseRoute());
   } catch (err) {
     console.error(err);
-    root.innerHTML = `<section class="paper center"><h2>Couldn’t open your studio</h2><p class="lede">${esc(errMsg(err))}</p><button class="btn" data-act="signout">Sign out</button></section>`;
+    setRoot(`<section class="paper center"><h2>Couldn’t open your studio</h2><p class="lede">${esc(errMsg(err))}</p><button class="btn" data-act="signout">Sign out</button></section>`);
   }
 }
 
@@ -111,7 +111,7 @@ function presetButtons(selectedTheme) {
 function renderOnboarding() {
   const suggested = ui.cleanHandle((user.email || '').split('@')[0]);
   draft = ui.normalizeArtist({ studioName: user.displayName || 'My studio', handle: suggested, theme: ui.DEFAULT_THEME });
-  root.innerHTML = `<section class="paper center onboard">
+  setRoot(`<section class="paper center onboard">
     <h2>Set up your studio</h2>
     <p class="lede">You can change all of this later.</p>
     <form data-act="onboard">
@@ -120,7 +120,7 @@ function renderOnboarding() {
       <div class="field"><span>Pick a look</span><div class="presets">${presetButtons(draft.theme)}</div></div>
       <button class="btn primary">Open my studio →</button>
     </form>
-  </section>`;
+  </section>`);
 }
 
 async function finishOnboarding(form) {
@@ -168,7 +168,7 @@ async function show(r) {
 }
 
 function renderShell() {
-  root.innerHTML = `
+  setRoot(`
     <div class="desk-bar">
       <span>Signed in as <b>${esc(user.email || user.displayName || 'you')}</b></span>
       <div class="bar-actions">
@@ -177,7 +177,7 @@ function renderShell() {
         <button class="btn small ghost" data-act="signout">Sign out</button>
       </div>
     </div>
-    <div id="view"></div>`;
+    <div id="view"></div>`);
 }
 const viewEl = () => $('view');
 
@@ -757,11 +757,11 @@ window.addEventListener('drop', e => e.preventDefault());
 
 /* ---------- start ---------- */
 if (!isConfigured) {
-  root.innerHTML = `<section class="paper center"><h2>Almost there</h2>
-    <p class="lede">Add your Firebase settings to <code>assets/firebase-config.js</code> to switch on sign-up. The README walks through it step by step.</p></section>`;
+  setRoot(`<section class="paper center"><h2>Almost there</h2>
+    <p class="lede">Add your Firebase settings to <code>assets/firebase-config.js</code> to switch on sign-up. The README walks through it step by step.</p></section>`);
 } else {
   boot().catch(err => {
     console.error(err);
-    root.innerHTML = `<section class="paper center"><h2>Couldn’t start the studio</h2><p class="lede">${esc(errMsg(err))}</p></section>`;
+    setRoot(`<section class="paper center"><h2>Couldn’t start the studio</h2><p class="lede">${esc(errMsg(err))}</p></section>`);
   });
 }
