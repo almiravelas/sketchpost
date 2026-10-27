@@ -9,13 +9,3 @@ document.querySelectorAll('[data-icon]').forEach(el => {
   el.innerHTML = el.dataset.icon === 'flower' ? FLOWER : (ui.ICONS[el.dataset.icon] || '');
 });
 document.getElementById('pcPostmark').outerHTML = ui.postmark(ui.todayISO(), 'SKETCHPOST');
-
-// The feedback button only appears once the feedback letter (assets/feedback.js) is set up.
-const fbBtn = document.getElementById('aboutFeedback');
-function hookFeedback() {
-  if (!window.SketchPostFeedback) return false;
-  fbBtn.hidden = false;
-  fbBtn.addEventListener('click', () => window.SketchPostFeedback.open());
-  return true;
-}
-if (!hookFeedback()) window.addEventListener('sketchpost-feedback-ready', hookFeedback, { once: true });

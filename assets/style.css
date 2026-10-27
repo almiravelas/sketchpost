@@ -322,6 +322,13 @@ textarea{resize:vertical}
 .sticky h3{font:700 23px/1.05 'Gaegu',cursive;margin:0 0 6px;color:#2f2a20}
 .sticky p{margin:0 0 8px;font-size:14px}
 .sticky .btn{margin-top:4px}
+.mail-link{display:inline-flex;align-items:center;gap:10px;margin-top:4px;text-decoration:none;color:#2f2a20}
+.mail-text{font:700 24px/1 'Gaegu',cursive;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.mail-ico{width:46px;height:46px;border-radius:50%;background:var(--red);display:grid;place-items:center;box-shadow:0 3px 0 color-mix(in srgb,var(--red),#000 32%);transform:rotate(-8deg);transition:transform .15s}
+.mail-ico svg{width:30px;height:auto;display:block}
+.mail-link:hover .mail-ico{transform:rotate(4deg) scale(1.08)}
+.mail-link:focus-visible{outline:3px solid var(--navy);outline-offset:4px;border-radius:10px}
+.mail-addr{margin:6px 0 0!important;font-size:12px!important;font-weight:800;color:#6b5f45;user-select:all}
 .sticker{position:absolute;width:58px;z-index:2;pointer-events:none;
   filter:drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff) drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff) drop-shadow(0 4px 3px rgba(0,0,0,.18))}
 .sticker svg{display:block;width:100%;height:auto}
