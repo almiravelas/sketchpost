@@ -4,12 +4,12 @@
 // These values are safe to publish: they only identify your project.
 // Who can read and write is decided by firestore.rules, not by hiding this file.
 export const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "000000000000",
-  appId: "PASTE_YOUR_APP_ID"
+  apiKey: "AIzaSyCN8b_jlS3XHl99yFKMtsqJ_2XPd6JmPlU",
+  authDomain: "sketchpost-87a75.firebaseapp.com",
+  projectId: "sketchpost-87a75",
+  storageBucket: "sketchpost-87a75.firebasestorage.app",
+  messagingSenderId: "866877941744",
+  appId: "1:866877941744:web:652ead19eaa460eba39f35"
 };
 
 // The platform's own name, shown on the landing page and in small print on every tracking page.
