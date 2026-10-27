@@ -10,7 +10,7 @@
 //        <script src="/assets/feedback.js" defer></script>
 
 (() => {
-  const ACCESS_KEY = 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY';
+  const ACCESS_KEY = 'c588b7b4-4a39-4f06-b154-f38d585cd7b6';
   const NUDGE_DELAY_MS = 6000;           // when the "How's SketchPost so far?" bubble pops up (once per visitor)
   const NUDGE_KEY = 'sp-feedback-nudged';
 
