@@ -136,6 +136,25 @@ export function groupImages(images) {
   return map;
 }
 
+/* ---------- clickable links in notes ---------- */
+// Turns http(s):// and www. addresses into links that open in a new tab. Everything else stays plain, escaped text.
+const URL_RE = /(https?:\/\/[^\s<>"']+|www\.[^\s<>"']+)/gi;
+export function linkify(text) {
+  const s = String(text ?? '');
+  let out = '', last = 0;
+  for (const m of s.matchAll(URL_RE)) {
+    let url = m[0];
+    const trail = url.match(/[.,!?;:)\]}]+$/);          // leave sentence punctuation outside the link
+    if (trail) url = url.slice(0, -trail[0].length);
+    if (!url) continue;
+    const href = /^www\./i.test(url) ? `https://${url}` : url;
+    const label = url.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+    out += esc(s.slice(last, m.index)) + `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer nofollow ugc">${esc(label)}</a>`;
+    last = m.index + url.length;
+  }
+  return out + esc(s.slice(last));
+}
+
 /* ---------- render pieces ---------- */
 export function summary(stages) {
   const total = stages.length;
@@ -252,7 +271,7 @@ export function viewCard(st, i, n, imgs, open, eta = '') {
   return `<div class="card-top"><span class="eyebrow">Stage ${i + 1} of ${n}</span><span class="pill ${pc}">${pt}</span></div>
     <h3>${esc(st.name)}</h3>
     <p class="when">${when}</p>
-    ${st.note ? `<p class="note">${esc(st.note)}</p>` : ''}
+    ${st.note ? `<p class="note">${linkify(st.note)}</p>` : ''}
     <div class="proofs">${proofs}</div>`;
 }
 

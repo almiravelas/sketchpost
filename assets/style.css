@@ -111,6 +111,9 @@ h1{font:700 46px/1 'Gaegu',cursive;margin:2px 0 0;color:var(--on-bg);text-shadow
 .card h3{font:700 32px/1.05 'Gaegu',cursive;margin:8px 0 2px;color:var(--navy);overflow-wrap:anywhere}
 .when{margin:0;font-size:13px;font-weight:800;color:var(--muted)}
 .note{margin:10px 0 0;overflow-wrap:anywhere;white-space:pre-line}
+.note a{color:var(--blue-2);font-weight:800;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.note a:hover{color:var(--red)}
+.note a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;border-radius:3px}
 .proofs{margin-top:12px;padding-top:12px;border-top:2px dashed var(--line)}
 .proof-link{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:900;color:var(--blue-2);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
 .proof-link:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:4px}
