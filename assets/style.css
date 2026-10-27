@@ -278,6 +278,72 @@ textarea{resize:vertical}
   .parcel-grid{grid-template-columns:1fr}
 }
 
+/* ---------- site nav + support card ---------- */
+.site-nav{display:flex;gap:6px;flex-wrap:wrap}
+.site-nav.top-right{justify-content:flex-end}
+.site-nav a{color:var(--on-bg);font:900 13px/1 'Nunito',sans-serif;text-decoration:none;padding:9px 13px;border-radius:999px;background:color-mix(in srgb,var(--on-bg) 16%,transparent)}
+.site-nav a:hover{background:color-mix(in srgb,var(--on-bg) 26%,transparent)}
+.site-nav a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.support-card{display:flex;gap:18px;align-items:center;background:var(--paper);border-radius:16px;padding:18px 20px;box-shadow:0 5px 0 var(--shadow)}
+.support-card .stamp{--sw:70px;--sh:84px;--r:4px;transform:rotate(-6deg);
+  --edge:color-mix(in srgb,var(--navy) 55%,transparent);
+  filter:drop-shadow(1.5px 0 0 var(--edge)) drop-shadow(-1.5px 0 0 var(--edge)) drop-shadow(0 1.5px 0 var(--edge)) drop-shadow(0 -1.5px 0 var(--edge)) drop-shadow(0 3px 0 var(--line))}
+.support-card .stamp .motif{width:66%;margin:0}
+.support-card h2{font:700 30px/1.05 'Gaegu',cursive;margin:0 0 4px;color:var(--navy)}
+.support-card p{margin:0;color:var(--muted)}
+.support-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.foot .copy + .copy{margin-top:4px}
+
+/* ---------- about: postcard ---------- */
+.about-wrap .top{margin-bottom:28px}
+.postcard{position:relative;padding:12px;border-radius:12px;box-shadow:0 6px 0 var(--shadow);
+  background:repeating-linear-gradient(-45deg,var(--red) 0 14px,#fff 14px 22px,var(--navy) 22px 36px,#fff 36px 44px)}
+.pc-inner{background:var(--paper);border-radius:4px;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+.pc-letter{padding:30px 30px 28px}
+.pc-letter p{margin:0 0 12px}
+.pc-hello{font:700 44px/1 'Gaegu',cursive;color:var(--navy);margin:0 0 14px}
+.pc-name{font-weight:900;font-size:18px;margin:0!important}
+.pc-role{font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:2px 0 18px!important}
+.pc-sign{font:700 24px/1.15 'Gaegu',cursive;color:var(--navy);margin-top:18px!important}
+.pc-sign span{font-size:32px;color:var(--red)}
+.pc-side{border-left:2px solid color-mix(in srgb,var(--navy) 40%,transparent);padding:24px 22px 26px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.pc-stamp{position:relative;--sw:96px;--sh:114px;align-self:flex-end;margin-right:6px}
+.pc-stamp .stamp{transform:rotate(4deg);filter:drop-shadow(0 4px 0 var(--line))}
+.pc-stamp .stamp .motif{width:56%}
+.pc-stamp .stamp-label{font-size:13px}
+.pc-stamp .postmark{left:auto;right:calc(var(--sw)*.5);top:calc(var(--sh)*.42);width:calc(var(--sw)*1.25)}
+.pc-address{list-style:none;margin:6px 0 0;padding:0}
+.pc-address li{font:700 21px/1.2 'Gaegu',cursive;color:var(--ink);border-bottom:2px solid var(--line);padding:9px 2px 3px;display:flex;gap:10px;align-items:baseline;overflow-wrap:anywhere}
+.pc-address span{font:900 10px/1 'Nunito',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);min-width:34px}
+.sticky{position:relative;padding:18px 16px 16px;border-radius:3px;box-shadow:0 6px 14px rgba(0,0,0,.12),0 2px 0 rgba(0,0,0,.06);color:#3a3326}
+.sticky::before{content:"";position:absolute;top:-9px;left:50%;width:74px;height:20px;transform:translateX(-50%) rotate(-3deg);background:rgba(255,255,255,.6);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.sticky.yellow{background:#fff1a6;transform:rotate(-1.6deg)}
+.sticky.pink{background:#ffd9e2;transform:rotate(1.2deg)}
+.sticky h3{font:700 23px/1.05 'Gaegu',cursive;margin:0 0 6px;color:#2f2a20}
+.sticky p{margin:0 0 8px;font-size:14px}
+.sticky .btn{margin-top:4px}
+.sticker{position:absolute;width:58px;z-index:2;pointer-events:none;
+  filter:drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff) drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff) drop-shadow(0 4px 3px rgba(0,0,0,.18))}
+.sticker svg{display:block;width:100%;height:auto}
+.sticker.s1{top:-18px;left:-14px;transform:rotate(-14deg)}
+.sticker.s2{bottom:-16px;left:34%;transform:rotate(10deg);width:50px}
+.sticker.s3{top:-20px;right:30%;transform:rotate(8deg);width:52px}
+.sticker.s4{bottom:-18px;right:-12px;transform:rotate(-8deg)}
+.about-closing{text-align:center;color:var(--on-bg);font:700 24px/1.25 'Gaegu',cursive;margin:34px 12px 0;text-shadow:0 2px 0 var(--shadow)}
+@media (max-width:760px){
+  .pc-inner{grid-template-columns:1fr}
+  .pc-side{border-left:0;border-top:2px solid color-mix(in srgb,var(--navy) 40%,transparent)}
+  .pc-stamp{position:absolute;top:-6px;right:10px;--sw:74px;--sh:88px}
+  .pc-stamp .stamp-label{font-size:10px}
+  .pc-letter{padding:26px 20px 20px}
+  .pc-hello{font-size:36px;padding-right:80px}
+  .pc-side{padding:20px 18px 24px}
+  .pc-address{margin-top:0}
+  .sticker.s3{display:none}
+  .support-card{flex-direction:column;text-align:center}
+  .support-actions{justify-content:center}
+}
+
 /* ---------- full-screen loader ---------- */
 .loading-screen{position:fixed;inset:0;z-index:40;background:var(--blue);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--on-bg);transition:opacity .25s}
 .loading-screen::after{content:"";position:absolute;inset:0;background-image:var(--noise);opacity:.22;mix-blend-mode:multiply;pointer-events:none}

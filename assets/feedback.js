@@ -115,6 +115,8 @@
     </div>`;
 
   document.body.append(launch, overlay);
+  window.SketchPostFeedback = { open: () => open() };
+  window.dispatchEvent(new Event('sketchpost-feedback-ready'));
 
   /* ---------- open / close ---------- */
   let lastFocus = null;
