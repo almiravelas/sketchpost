@@ -3,7 +3,8 @@
 // Letters are emailed to the site creator through Web3Forms (https://web3forms.com).
 //
 // Setup:
-//   1. Go to https://web3forms.com, enter your email, and copy the access key they email you.
+//   1. Go to https://web3forms.com, enter sigbinnie@gmail.com, and copy the access key they email you.
+//      Letters go to whichever email address the access key was created with.
 //   2. Paste it below in ACCESS_KEY.
 //   3. Add this line just before </body> on every page where the button should appear:
 //        <script src="/assets/feedback.js" defer></script>
