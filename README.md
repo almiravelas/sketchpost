@@ -63,4 +63,4 @@ firestore.rules           database security rules (paste into Firebase)
 vercel.json               routes: /t/CODE → track.html, /studio → studio.html
 ```
 
-© 2026 Almira Velasquez aka sigbinnie
+© Almira Velasquez (@sigbinnie)
