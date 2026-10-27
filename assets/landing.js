@@ -36,6 +36,6 @@ $('lookupForm').addEventListener('submit', e => {
   e.preventDefault();
   const code = $('lookupInput').value.trim().toUpperCase().replace(/\s+/g, '');
   const note = $('lookupNote');
-  if (!/^[A-Z0-9-]{4,40}$/.test(code)) { note.hidden = false; note.textContent = 'Tracking numbers look like XX-XXXX-XXXX.'; return; }
+  if (!/^[A-Z0-9][A-Z0-9-]{2,29}$/.test(code)) { note.hidden = false; note.textContent = 'Tracking numbers use letters, numbers and dashes.'; return; }
   location.href = `/t/${encodeURIComponent(code)}`;
 });

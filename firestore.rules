@@ -39,7 +39,7 @@ service cloud.firestore {
       allow get: if true;                      // a client opening their tracking link
       allow list: if ownsIt();                 // an artist listing their own parcels
       allow create: if signedIn() && validParcel()
-        && code.matches('^[A-Z0-9]{2,5}-[A-Z0-9]{4}-[A-Z0-9]{4}$');
+        && code.matches('^[A-Z0-9][A-Z0-9-]{2,29}$');
       allow update: if ownsIt() && validParcel();
       allow delete: if ownsIt();
 

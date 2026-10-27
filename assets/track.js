@@ -22,7 +22,7 @@ function getCode() {
   const raw = m ? decodeURIComponent(m[1]) : (new URLSearchParams(location.search).get('t') || '');
   return raw.trim().toUpperCase();
 }
-const validCode = c => /^[A-Z0-9-]{4,40}$/.test(c);
+const validCode = c => /^[A-Z0-9][A-Z0-9-]{2,29}$/.test(c);
 
 /* ---------- views ---------- */
 function showLookup(note) {
@@ -75,7 +75,7 @@ stagesEl.addEventListener('click', e => {
 $('lookupForm').addEventListener('submit', e => {
   e.preventDefault();
   const code = $('lookupInput').value.trim().toUpperCase().replace(/\s+/g, '');
-  if (!validCode(code)) { showLookup('Tracking numbers look like XX-XXXX-XXXX.'); return; }
+  if (!validCode(code)) { showLookup('Tracking numbers use letters, numbers and dashes.'); return; }
   location.href = `/t/${encodeURIComponent(code)}`;
 });
 

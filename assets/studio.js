@@ -235,6 +235,7 @@ function renderList() {
         <p class="hint">${parcels.length} parcel${parcels.length === 1 ? '' : 's'} · ${count('transit')} in transit · ${count('delivered')} delivered</p></div>
       <button class="btn primary" data-act="new">+ New parcel</button>
     </div>
+    <div id="newSlot"></div>
     <div class="list-tools">
       <input type="search" id="q" placeholder="Search by title, client or tracking no." value="${esc(filter.q)}" aria-label="Search parcels">
       <div class="chips">${chip('all', 'All')}${chip('transit', 'In transit')}${chip('created', 'Not started')}${chip('delivered', 'Delivered')}</div>
@@ -248,11 +249,37 @@ function makeCode() {
   return `${artist.prefix}-${s.slice(0, 4)}-${s.slice(4)}`;
 }
 
-async function newParcel(btn) {
-  btn.disabled = true;
+// Tracking numbers: 3–30 characters, capital letters, numbers and dashes. They're also the link, so they must be unique.
+const cleanCode = s => String(s || '').toUpperCase().trim().replace(/\s+/g, '-').replace(/[^A-Z0-9-]/g, '').replace(/-{2,}/g, '-').replace(/^-+|-+$/g, '').slice(0, 30);
+const validCode = c => /^[A-Z0-9][A-Z0-9-]{2,29}$/.test(c);
+async function checkCode(code, current) {
+  if (!validCode(code)) return 'Use 3–30 letters, numbers or dashes (e.g. SB-001 or MIKA-PORTRAIT).';
+  if (code === current) return 'That’s already this parcel’s tracking number.';
+  if ((await fb.getDoc(parcelRef(code))).exists()) return `${code} is already taken. Try another.`;
+  return '';
+}
+
+function showNewForm() {
+  const slot = $('newSlot'); if (!slot) return;
+  slot.innerHTML = `<form class="desk-card new-parcel" data-act="create-parcel">
+    <h2 class="rubber">New parcel</h2>
+    <div class="linkbox" style="margin-top:6px">
+      <label class="field grow"><span>Tracking number</span><input name="code" value="${esc(makeCode())}" maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase;font-family:ui-monospace,SFMono-Regular,Menlo,monospace" required></label>
+      <button type="button" class="btn ghost" data-act="random-code">↻ Random</button>
+    </div>
+    <p class="drop-hint">Type your own (like SB-001) or keep the random one. Anyone who guesses a tracking number can view that parcel, so random codes are the most private.</p>
+    <div class="desk-foot"><button class="btn primary">Create parcel</button><button type="button" class="btn ghost" data-act="cancel-new">Cancel</button></div>
+  </form>`;
+  const i = slot.querySelector('input'); i.focus(); i.select();
+}
+
+async function newParcel(form) {
+  const btn = form.querySelector('button.primary'); btn.disabled = true;
   try {
-    let code = makeCode();
-    for (let t = 0; t < 5 && (await fb.getDoc(parcelRef(code))).exists(); t++) code = makeCode();
+    const code = cleanCode(form.elements.code.value);
+    form.elements.code.value = code;
+    const problem = await checkCode(code);
+    if (problem) { ui.toast(problem, 4000); return; }
     const d = {
       ownerId: user.uid, title: 'New commission', client: '', artist: artist.handle ? '@' + artist.handle : artist.studioName,
       eta: '', stages: ui.defaultStages(artist.defaultStages), createdAt: fb.serverTimestamp(), updatedAt: fb.serverTimestamp()
@@ -264,6 +291,29 @@ async function newParcel(btn) {
     const t = root.querySelector('[data-pfield="title"]'); if (t) { t.focus(); t.select(); }
   } catch (err) { console.error(err); ui.toast(errMsg(err)); }
   finally { if (btn.isConnected) btn.disabled = false; }
+}
+
+// Changing a tracking number moves the parcel (and its proofs) to the new number. The old link stops working.
+async function renameParcel(newCode) {
+  const oldCode = cur;
+  await flushSave();
+  const problem = await checkCode(newCode, oldCode);
+  if (problem) { ui.toast(problem, 4000); return; }
+  ui.toast(`Moving parcel to ${newCode}…`, 60000);
+  try {
+    const snap = await fb.getDoc(parcelRef(oldCode));
+    await fb.setDoc(parcelRef(newCode), { ...snap.data(), ownerId: user.uid, updatedAt: fb.serverTimestamp() });
+    if (unsubImages) { unsubImages(); unsubImages = null; }
+    const imgs = await fb.getDocs(imagesCol(oldCode));
+    for (const d of imgs.docs) await fb.setDoc(fb.doc(fb.db, 'parcels', newCode, 'images', d.id), d.data());
+    await deleteDocs(imgs.docs.map(d => d.ref));
+    await fb.deleteDoc(parcelRef(oldCode));
+  } catch (err) { console.error(err); ui.toast(errMsg(err)); openParcel(cur); return; }
+  const i = parcels.findIndex(p => p.id === oldCode);
+  if (i >= 0) parcels[i] = { ...parcels[i], id: newCode, updatedAt: Date.now() };
+  history.replaceState(null, '', urlFor({ view: 'parcel', code: newCode }));
+  await openParcel(newCode);
+  ui.toast(`Tracking number changed to ${newCode}. Send your client the new link.`, 5000);
 }
 
 /* ======================================================================
@@ -337,6 +387,10 @@ function renderEditor() {
         <div><h2 class="rubber">Parcel details</h2>
           <p class="hint">Changes save automatically and show up on your client’s page right away. <span class="save-state" id="saveState">Saved ✓</span></p></div>
         <button class="btn primary" data-act="advance">Advance shipment →</button>
+      </div>
+      <div class="linkbox">
+        <label class="field grow"><span>Tracking number</span><input id="codeInput" value="${esc(data.id)}" maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase;font-family:ui-monospace,SFMono-Regular,Menlo,monospace"></label>
+        <button class="btn" data-act="rename" data-confirm="Old link will stop working. Tap again">Change</button>
       </div>
       <div class="linkbox">
         <label class="field grow"><span>Client tracking link</span><input id="clientLink" readonly value="${esc(link)}"></label>
@@ -562,7 +616,19 @@ document.addEventListener('click', async e => {
       break;
     }
     case 'logo': draft.logo = b.dataset.icon; $('iconPick').innerHTML = iconPickHTML(); settingsChanged({ header: true }); break;
-    case 'new': newParcel(b); break;
+    case 'new': showNewForm(); break;
+    case 'random-code': { const i = b.closest('form').elements.code; i.value = makeCode(); i.focus(); break; }
+    case 'cancel-new': $('newSlot').innerHTML = ''; break;
+    case 'rename': {
+      const next = cleanCode($('codeInput').value);
+      $('codeInput').value = next;
+      if (!b.dataset.armed) {
+        const problem = await checkCode(next, cur);
+        if (problem) { ui.toast(problem, 4000); break; }
+      }
+      ui.twoStep(b, () => renameParcel(next));
+      break;
+    }
     case 'filter': filter.status = b.dataset.status; renderList(); break;
     case 'open-parcel': go({ view: 'parcel', code: b.dataset.code }); break;
     case 'copy': {
@@ -614,6 +680,7 @@ document.addEventListener('click', async e => {
 root.addEventListener('submit', async e => {
   const f = e.target; e.preventDefault();
   if (f.dataset.act === 'onboard') { finishOnboarding(f); return; }
+  if (f.dataset.act === 'create-parcel') { newParcel(f); return; }
   if (f.dataset.act === 'add-url') {
     const sid = f.closest('[data-id]').dataset.id;
     const v = f.elements.url.value.trim();
