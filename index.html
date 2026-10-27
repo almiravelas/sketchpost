@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parcel Post · Commission tracking for artists</title>
+<meta name="description" content="Give every art commission a tracking page your clients will love. Sketch to delivery, stamp by stamp.">
+<meta name="theme-color" content="#5b8def">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="pm-top" d="M16 50 A34 34 0 0 1 84 50"/>
+    <path id="pm-bot" d="M9 50 A41 41 0 0 0 91 50"/>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="stamp logo"><div class="art"><span class="motif" id="logoMotif"></span></div></div>
+    <p class="eyebrow">Commission tracking for artists</p>
+    <h1>Parcel Post</h1>
+    <p class="tag">Give every commission a tracking page your clients will love: sketch to delivery, stamp by stamp.</p>
+    <div class="cta">
+      <a class="btn primary" href="/studio">Start your studio with Google</a>
+      <a class="btn" href="#track">Track a parcel</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="demo-frame" aria-label="Example tracking page">
+      <section class="ticket" id="demoTicket"></section>
+      <section class="route" id="demoRoute"></section>
+      <section class="stages" id="demoStages"></section>
+      <p class="demo-cap">This is what your clients see. Your colors, your stages.</p>
+    </div>
+
+    <section class="features" aria-label="Features">
+      <div class="feature"><div class="stamp" style="--c:var(--pink)"><div class="art"><span class="motif" data-icon="pencil"></span></div></div>
+        <h3>A stamp for every stage</h3><p>Sketching, rendering, revisions: add, rename and reorder stages to match how you work.</p></div>
+      <div class="feature"><div class="stamp" style="--c:#f6c944"><div class="art"><span class="motif" data-icon="sparkle"></span></div></div>
+        <h3>Proofs at a tap</h3><p>Post WIP images to any stage. Clients tap a thumbnail to see it full size.</p></div>
+      <div class="feature"><div class="stamp" style="--c:#bcd84a"><div class="art"><span class="motif" data-icon="brush"></span></div></div>
+        <h3>Your colors, your studio</h3><p>Pick a palette, a headline and a logo stamp. Every client page wears your look.</p></div>
+      <div class="feature"><div class="stamp" style="--c:#f6ad4b"><div class="art"><span class="motif" data-icon="envelope"></span></div></div>
+        <h3>As many parcels as you need</h3><p>Every commission gets its own private link. Keep them all in one tidy studio.</p></div>
+    </section>
+
+    <section class="paper center section-gap" id="track">
+      <h2>Have a tracking number?</h2>
+      <p class="lede">Enter the number your artist sent you.</p>
+      <form class="lookup-form" id="lookupForm">
+        <input id="lookupInput" placeholder="XX-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Tracking number" required>
+        <button class="btn primary">Track</button>
+      </form>
+      <p class="lookup-note" id="lookupNote" hidden></p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="thanks">Made for artists who love happy clients.</p>
+    <p class="copy">© 2026 Almira Velasquez aka sigbinnie</p>
+  </footer>
+</div>
+
+<script type="module" src="/assets/landing.js"></script>
+</body>
+</html>

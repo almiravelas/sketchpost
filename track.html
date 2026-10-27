@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Track your commission</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <path id="pm-top" d="M16 50 A34 34 0 0 1 84 50"/>
+    <path id="pm-bot" d="M9 50 A41 41 0 0 0 91 50"/>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="stamp logo"><div class="art"><span class="motif" id="logoMotif"></span></div></div>
+      <div>
+        <p class="eyebrow" id="studioLine">Parcel Post</p>
+        <h1 id="headline">Where’s my art?</h1>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <p class="banner" id="banner" hidden>Sample parcel. Connect Firebase (see README) to start tracking real commissions.</p>
+
+    <section class="paper center" id="message" hidden aria-live="polite"></section>
+
+    <section class="paper center" id="lookup" hidden>
+      <h2>Track your commission</h2>
+      <p class="lede">Enter the tracking number your artist sent you.</p>
+      <form class="lookup-form" id="lookupForm">
+        <input id="lookupInput" placeholder="XX-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Tracking number" required>
+        <button class="btn primary">Track</button>
+      </form>
+      <p class="lookup-note" id="lookupNote" hidden></p>
+    </section>
+
+    <section class="ticket" id="ticket" aria-label="Parcel details" hidden></section>
+    <section class="route" id="route" aria-label="Delivery route" hidden></section>
+    <section class="stages" id="stages" aria-label="Stages"></section>
+  </main>
+
+  <footer class="foot">
+    <p class="thanks" id="thanks"></p>
+    <p class="copy"><a href="/">Made with Parcel Post</a> · © 2026 Almira Velasquez aka sigbinnie</p>
+  </footer>
+</div>
+
+<script type="module" src="/assets/track.js"></script>
+</body>
+</html>
